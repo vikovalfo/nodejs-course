@@ -1,7 +1,7 @@
 'use-strict';
-const validator = require('validator');
-const chalk = require('chalk');
+const notes = require('./notes');
 
-// console.log(validator.isEmail('vector386@gmail.com'));
-// console.log(validator.isURL('http://example.com'));
-console.log(chalk.green.inverse.strikethrough.bold('Success!'));
+const command = process.argv[2];
+
+if (command === 'add') console.log('Adding note!');
+if (command === 'remove') console.log('Removing note!');
