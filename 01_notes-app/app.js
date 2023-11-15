@@ -1,9 +1,7 @@
 'use-strict';
-const fs = require('fs');
+const validator = require('validator');
 const notes = require('./notes');
 
-const FILE_PATH = __dirname + '\\' + 'notes.txt';
-
-console.log(notes.getNotes());
-// fs.writeFileSync(FILE_PATH, 'This file was created by nodejs');
-// fs.appendFileSync(FILE_PATH, '\n this is another line');
+console.log(validator.isEmail('vector386@gmail.com'));
+console.log(validator.isURL('http://example.com'));
+// console.log(notes.getNotes());
