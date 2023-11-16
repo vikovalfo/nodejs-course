@@ -1,19 +1,31 @@
 'use-strict';
 const fs = require('fs');
+const chalk = require('chalk');
 
-function getNotes(note) {
-    console.log(note);
+function getNote(title) {
+    const notes = loadNotes();
+    const note = notes.filter(note => note.title === title)[0];
+
+    if (note) {
+        console.log(chalk.magenta.inverse(note.title, note.body));
+    } else console.log(chalk.red.inverse('note does not exist!'));
+};
+
+
+function getNotes() {
+    const notes = loadNotes();
+    notes.length > 0 ? notes.forEach(note => console.log(chalk.blue(note.title), chalk.cyan(note.body))) : console.log(chalk.yellow.inverse('No notes to be listed!'));
 };
 
 function addNote(title, body) {
     const notes = loadNotes();
     const rep = notes.filter(note => note.title === title);
     if (rep.length > 0) {
-        console.log('note title taken... not saved');
+        console.log(chalk.red.inverse('note title taken... not saved'));
     } else {
         notes.push({ title, body });
         saveNotes(notes);
-        console.log('note added!');
+        console.log(chalk.green.inverse('note added!'));
     }
 };
 
@@ -23,9 +35,9 @@ function removeNote(title) {
 
     if (notes.length > notesToKeep.length) {
         saveNotes(notesToKeep);
-        console.log('note removed!');
+        console.log(chalk.green.inverse('note removed!'));
     } else {
-        console.log('note does not exist');
+        console.log(chalk.red.inverse('note does not exist'));
     }
 };
 
@@ -45,5 +57,6 @@ function saveNotes(notes) {
 module.exports = {
     getNotes,
     addNote,
-    removeNote
+    removeNote,
+    getNote
 };
