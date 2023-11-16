@@ -19,16 +19,13 @@ function addNote(title, body) {
 
 function removeNote(title) {
     const notes = loadNotes();
-    const rep = notes.filter(note => note.title === title);
-    console.log(rep);
+    const notesToKeep = notes.filter(note => note.title !== title);
 
-    if (rep.length === 0) {
-        console.log('note does not exist');
-    } else {
-        const noteIndex = notes.findIndex(note => note.title === title);
-        notes.splice(noteIndex, 1);
-        saveNotes(notes);
+    if (notes.length > notesToKeep.length) {
+        saveNotes(notesToKeep);
         console.log('note removed!');
+    } else {
+        console.log('note does not exist');
     }
 };
 
