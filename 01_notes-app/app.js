@@ -1,7 +1,28 @@
 'use-strict';
-const notes = require('./notes');
+const yargs = require('yargs');
 
-const command = process.argv[2];
+yargs.command({
+    command: 'add',
+    describe: 'Add new note',
+    handler: () => console.log('adding new note')
+});
 
-if (command === 'add') console.log('Adding note!');
-if (command === 'remove') console.log('Removing note!');
+yargs.command({
+    command: 'remove',
+    describe: 'Remove note',
+    handler: () => console.log('removing new note')
+});
+
+yargs.command({
+    command: 'list',
+    describe: 'List notes',
+    handler: () => console.log('Listing all notes')
+});
+
+yargs.command({
+    command: 'read',
+    describe: 'Read note',
+    handler: () => console.log('Reading note')
+});
+
+console.log(yargs.argv);

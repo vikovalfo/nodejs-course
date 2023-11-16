@@ -1,14 +1,18 @@
 'use-strict';
-function getNotes() {
-    return 'Your notes';
+function getNotes(note) {
+    console.log(note);
 };
 
-function addNote() {
-    return 'Your notes';
+function addNote(note) {
+    console.log(note);
 };
 
-function removeNote() {
-    return 'Your notes';
+function removeNote(note) {
+    console.log(note);
 };
 
-exports.getNotes = getNotes;
+module.exports = {
+    getNotes,
+    addNote,
+    removeNote
+};
