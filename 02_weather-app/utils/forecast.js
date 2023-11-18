@@ -2,7 +2,6 @@ const request = require('request');
 
 const { config } = require('../config/config');
 
-
 const forecast = async (latitude, longitude, callback) => {
     const url = `${config.weatherstack.API_HOST}${config.weatherstack.CURRENT_PATH}?access_key=${config.weatherstack.ACCESS_KEY}&query=${latitude},${longitude}`;
     await request({ url, json: true }, (error, { body }) => {
