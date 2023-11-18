@@ -5,7 +5,6 @@ const { config } = require('../config/config');
 
 const forecast = async (latitude, longitude, callback) => {
     const url = `${config.weatherstack.API_HOST}${config.weatherstack.CURRENT_PATH}?access_key=${config.weatherstack.ACCESS_KEY}&query=${latitude},${longitude}`;
-    console.log(url);
     await request({ url, json: true }, (error, response) => {
         if (error) {
             callback('Unable to connecto to weather services', undefined);

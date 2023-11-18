@@ -1,13 +1,15 @@
 'use-strict';
 const { forecast } = require('./utils/forecast');
-/* const { geocode } = require('./utils/geocode');
+const { geocode } = require('./utils/geocode');
 
-geocode('Philadelphia', (error, data) => {
-    if (error) console.log('Error', error);
-    if (data) console.log('Data', data);
-}); */
+geocode('Guadalajara', (geocodeError, geocodeData) => {
+    if (geocodeError) return console.log(geocodeError);
+    if (geocodeData) {
+        forecast(geocodeData.latitude, geocodeData.longitude, (forecastError, forecastData) => {
+            if (forecastError) return console.log('Error', forecastError);
+            console.log(forecastData);
+            console.log(geocodeData.location);
+        });
+    }
+}); 
 
-forecast(-75.7088, 44.1545, (error, data) => {
-    if (error) console.log('Error', error);
-    if (data) console.log('Data', data);
-});
