@@ -9,8 +9,7 @@ const config = {
         API_HOST: 'https://api.mapbox.com/geocoding/v5/',
         PLACES_PATH: 'mapbox.places/',
         LOCATION: 'Los%20Angeles.json',
-        ACCESS_KEY: 'pk.eyJ1IjoiYW5kcmV3bWVhZDEiLCJhIjoiY2pvOG8ybW90MDFhazNxcnJ4OTYydzJlOSJ9.njY7HvaalLEVhEOIghPTlw',
-        LIMIT: '1'
+        ACCESS_KEY: '',
     }
 };
 
