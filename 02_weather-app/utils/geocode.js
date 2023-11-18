@@ -5,17 +5,22 @@ const { config } = require('../config/config');
 
 const geocode = async (address, callback) => {
     const url = `${config.mapbox.API_HOST}${config.mapbox.PLACES_PATH}${encodeURIComponent(address)}.json?access_token=${config.mapbox.ACCESS_KEY}`;
-    await request({ url }, (error, response) => {
+    await request({ url }, (error, { body }) => {
         if (error) {
             callback('Unable to connect to location services!', undefined);
-        } else if (JSON.parse(response.body).features.length === 0) {
+        } else if (JSON.parse(body).features.length === 0) {
             callback('Unable to find location, try another search...', undefined);
         } else {
-            const features = JSON.parse(response.body).features;
+            const feature = JSON.parse(body).features[0];
+
+            const latitude = feature.center[1];
+            const longitude = feature.center[0];
+            const location = feature.place_name;
+
             callback(undefined, {
-                latitude: features[0].center[1],
-                longitude: features[0].center[0],
-                location: features[0].place_name
+                latitude,
+                longitude,
+                location
             });
         }
     });
