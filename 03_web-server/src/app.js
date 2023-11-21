@@ -2,13 +2,18 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 
+const publicDirectoryPath = (path.join(__dirname, '../public'));
+const viewsDirectoryPath = (path.join(__dirname, '../templates'));
+
 const app = express();
-app.set('view engine', 'hbs')
-app.use(express.static(path.join(__dirname, '../public')));
+
+app.set('view engine', 'hbs');
+app.set('views', viewsDirectoryPath);
+app.use(express.static(publicDirectoryPath));
 
 app.use(morgan('common'));
 
-app.get('', (req, res) => {
+app.get('', (_req, res) => {
     res.render('index', {
         title: 'Weather App',
         forecast: 'Guadalajara is partially cloudy',
@@ -17,7 +22,7 @@ app.get('', (req, res) => {
     });
 });
 
-app.get('/about', (req, res) => {
+app.get('/about', (_req, res) => {
     res.render('about', { name: 'Alessa' });
 });
 
