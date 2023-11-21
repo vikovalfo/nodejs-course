@@ -18,7 +18,10 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
-    res.send('<h1>The weather app</h1>');
+    res.send({
+        forecast: 'Guadalajara is partially cloudy',
+        location: 'Guadalajara, Jalisco'
+    });
 });
 
 app.listen(3000, () => console.log('Server running on port 3000'));
