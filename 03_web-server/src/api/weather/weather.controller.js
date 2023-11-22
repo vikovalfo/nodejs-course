@@ -1,8 +1,11 @@
 const { forecast } = require('./forecast.service');
 const { geocode } = require('./geocode.service');
 
-const weatherFn = (req, res) => {
+const HomeFn = (_req, res) => {
+    res.render('index', { title: 'Weather App' });
+};
 
+const weatherFn = (req, res) => {
     if (!req.query.address) {
         return res.send({
             error: 'You must provide an address'
@@ -22,7 +25,7 @@ const weatherFn = (req, res) => {
                 forecast: forecastData,
                 location,
                 address: req.query.address
-           }) 
+            }); 
         })
     });
 };
@@ -40,6 +43,7 @@ const helpErrorFn = (_req, res) => res.render('error', { title: '404 for help', 
 const errorFn = (_req, res) => res.render('error', { title: '404', message: 'Page not found' });
 
 module.exports = {
+    homeHandler: HomeFn,
     weatherHandler: weatherFn,
     aboutHandler: aboutFn,
     helpHandler: helpFn,

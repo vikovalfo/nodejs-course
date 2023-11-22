@@ -5,16 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/index.js"></script>
     <title>Weather</title>
 </head>
 
 <body>
     <div class="main-content">
         {{>header}}
-        <main>
-            <p>{{forecast}}</p>
-            <p>{{location}}</p>
-        </main>
+        <div>
+            <p>
+                <input id="address" placeholder="Address"/>
+                <button onClick="fetchWeather()">Search</button>
+            </p>
+        </div>
+        <p>
+            <p><label id="forecast"></label></p>
+            <p><label id="location"></label></p>
+            <p><label id="error"></label></p>
+        </p>
     </div>
     {{>footer}}
 </body>
