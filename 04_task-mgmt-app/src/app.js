@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectID } = require('mongodb');
 
 const { connectionData } = require('./config');
 
@@ -14,30 +14,14 @@ MongoClient.connect(connectionURL, {
 
     console.log(`Connected to ${connectionData.database}`);
 
-    const db = client.db(connectionData.database)
+    const db = client.db(connectionData.database);
 
-/*     db.collection('users').insertOne({
-        name: 'David',
-        age: 27
-    }, (error, result) => {
-        if (error) {
-            return console.log('Unable to insert user');
-        }
-
-        console.log(result.ops);
+    db.collection('users').findOne({
+        _id: new ObjectID("655f9da7141f2d0008101418")
+    }, (error, user) => {
+        if(error) return console.log('Unable to fetch');
+        console.log(user)
     });
 
-    db.collection('users').insertMany([
-        { name: 'Jen', age: 21 },
-        { name: 'Robert', age: 32 }
-    ], (_error, result) => console.log(result.ops));
-
-    db.collection('tasks').insertMany([
-        { description: 'Clean the house', completed: true },
-        { description: 'Renew inspection', completed: false },
-        { description: 'Pot plants', completed: false },
-    ], (error, result) => {
-        if (error) return console.log('Unable to insert records');
-        console.log(result.ops);
-    }); */
+    db.collection('users').find().toArray().then(data=> console.log(data));
 });
