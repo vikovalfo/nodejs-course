@@ -21,4 +21,20 @@ const me = new User({
     age: 27
 });
 
-me.save().then(() => console.log(me)).catch((err) => console.log('Error saving the user: ', err));
+
+const Task = mongoose.model('Task', {
+    description: {
+        type: String
+    },
+    completed: {
+        type: Boolean
+    }
+});
+
+const toDo = new Task({
+    description: 'Should rip the ubuntu iso on the pendrive',
+    completed: true
+});
+
+// me.save().then(() => console.log(me)).catch((err) => console.log('Error saving the user: ', err));
+// toDo.save().then(() => console.log(toDo)).catch((err) => console.log('Error saving the task: ', err));
