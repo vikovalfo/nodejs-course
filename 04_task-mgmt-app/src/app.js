@@ -16,16 +16,17 @@ MongoClient.connect(connectionURL, {
 
     const db = client.db(connectionData.database);
 
-/*     db.collection('users').findOne({
+/*     db.collection('users').updateOne({
         _id: new ObjectID("655f9da7141f2d0008101418")
-    }, (error, user) => {
-        if(error) return console.log('Unable to fetch');
-        console.log(user)
-    });
-
-    db.collection('users').find().toArray().then(data => console.log(data)); */
+    }, { $set: { name: 'Lawrence' } })
+        .then(data => console.log(data))
+        .catch(() => console.log('Error updating')); */
     
-    db.collection('tasks').find({})
-        .toArray()
-        .then(data => console.log(data.pop()));
+/*     db.collection('tasks').updateMany({
+        completed: false
+    }, {
+        $set: { completed: true }
+    })
+        .then(result => console.log(result))
+        .catch(err => console.log(err)); */
 });
