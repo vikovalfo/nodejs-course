@@ -16,12 +16,16 @@ MongoClient.connect(connectionURL, {
 
     const db = client.db(connectionData.database);
 
-    db.collection('users').findOne({
+/*     db.collection('users').findOne({
         _id: new ObjectID("655f9da7141f2d0008101418")
     }, (error, user) => {
         if(error) return console.log('Unable to fetch');
         console.log(user)
     });
 
-    db.collection('users').find().toArray().then(data=> console.log(data));
+    db.collection('users').find().toArray().then(data => console.log(data)); */
+    
+    db.collection('tasks').find({})
+        .toArray()
+        .then(data => console.log(data.pop()));
 });
