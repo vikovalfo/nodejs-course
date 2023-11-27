@@ -1,32 +1,23 @@
-const { MongoClient, ObjectID } = require('mongodb');
+const express = require('express');
+const morgan = require('morgan');
 
-const { connectionData } = require('./config');
+const User = require('./models/user')
 
-const connectionURL = `${connectionData.protocol}${connectionData.user}${connectionData.password}${connectionData.hostname}${connectionData.domain}${connectionData.database}?retryWrites=true&w=majority`;
+const app = express();
+const port = process.env.PORT || 3000;
 
-MongoClient.connect(connectionURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}, (error, client) => {
-    if (error) {
-        return console.log('Unable to connect to database!')
-    }
+app.use(express.json())
 
-    console.log(`Connected to ${connectionData.database}`);
+app.post('/users', (req, res) => {
+    const user = new User(req.body)
 
-    const db = client.db(connectionData.database);
-
-/*     db.collection('users').updateOne({
-        _id: new ObjectID("655f9da7141f2d0008101418")
-    }, { $set: { name: 'Lawrence' } })
-        .then(data => console.log(data))
-        .catch(() => console.log('Error updating')); */
-    
-/*     db.collection('tasks').updateMany({
-        completed: false
-    }, {
-        $set: { completed: true }
+    user.save().then(() => {
+        res.send(user)
+    }).catch((e) => {
+        res.status(400).send(e)
     })
-        .then(result => console.log(result))
-        .catch(err => console.log(err)); */
 });
+
+app.use(morgan('common'));
+
+app.listen(port, () => console.log('Server listening on port ', port));

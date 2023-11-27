@@ -3,7 +3,7 @@ const connectionData = {
     domain: 'mongodb.net/',
     hostname: '@cluster0.xrednyp.',
     database: 'task-mgmt',
-    user: ':',
+    user: '',
     password: '',
 };
 
