@@ -16,7 +16,24 @@ app.post('/users', (req, res) => {
         res.status(200).send(user);
     }).catch((e) => {
         res.status(400).send(e);
-    })
+    });
+});
+
+app.get('/users/all', (_req, res) => {
+    User.find({}).then((users) => {
+        res.status(200).send(users);
+    }).catch((e) => {
+        res.status(400).send(e);
+    });
+});
+
+app.get('/users/:id', (req, res) => {
+    const _id = req.params.id;
+    User.findOne({_id}).then((user) => {
+        res.status(200).send(user);
+    }).catch((e) => {
+        res.status(400).send(e);
+    });
 });
 
 app.post('/tasks', (req, res) => {
@@ -26,9 +43,9 @@ app.post('/tasks', (req, res) => {
         res.status(200).send(task);
     }).catch((e) => {
         res.status(400).send(e)
-    })
+    });
 });
 
 app.use(morgan('common'));
 
-app.listen(port, () => console.log('Server listening on port ', port));
+app.listen(port, () => console.log('Server listening on port', port));
