@@ -8,61 +8,66 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(morgan('common'));
 
-app.post('/users', (req, res) => {
+app.post('/users', async (req, res) => {
     const user = new User(req.body);
 
-    user.save().then(() => {
-        res.status(200).send(user);
-    }).catch((e) => {
+    try {
+        const savedUser = await user.save();
+        res.status(201).send(savedUser);
+    } catch (e) {
         res.status(400).send(e);
-    });
+    }
 });
 
-app.get('/users/all', (_req, res) => {
-    User.find({}).then((users) => {
-        res.status(200).send(users);
-    }).catch((e) => {
+app.get('/users/all', async (_req, res) => {
+    try {
+        const usersFound = await User.find({});
+        res.status(200).send(usersFound);
+    } catch (e) {
         res.status(400).send(e);
-    });
+    }
 });
 
-app.get('/users/:id', (req, res) => {
+app.get('/users/:id', async (req, res) => {
     const _id = req.params.id;
-    User.findOne({_id}).then((user) => {
-        res.status(200).send(user);
-    }).catch((e) => {
+
+    try {
+        const userFound = await User.findOne({ _id });
+        res.status(200).send(userFound);
+    } catch (e) {
         res.status(400).send(e);
-    });
+    }
 });
 
-app.post('/tasks', (req, res) => {
+app.post('/tasks', async (req, res) => {
     const task = new Task(req.body);
-
-    task.save().then(() => {
-        res.status(200).send(task);
-    }).catch((e) => {
-        res.status(400).send(e)
-    });
-});
-
-app.get('/tasks/all', (_req, res) => {
-    Task.find({}).then((tasks) => {
-        res.status(200).send(tasks);
-    }).catch((e) => {
+    try {
+        const taskSaved = await task.save();
+        res.status(201).send(taskSaved);
+    } catch (e) {
         res.status(400).send(e);
-    });
+    }
 });
 
-app.get('/tasks/:id', (req, res) => {
+app.get('/tasks/all', async (_req, res) => {
+    try {
+        const tasksFound = await Task.find({});
+        res.status(200).send(tasksFound);
+    } catch (e) {
+        res.status(400).send(e);
+    }
+});
+
+app.get('/tasks/:id', async (req, res) => {
     const _id = req.params.id;
-    Task.findOne({ _id }).then((user) => {
-        res.status(200).send(user);
-    }).catch((e) => {
+    try {
+        const taskFound = await Task.findOne({ _id });
+        res.status(200).send(taskFound);
+    } catch (e) {
         res.status(400).send(e);
-    });
+    }
 });
-
-app.use(morgan('common'));
 
 app.listen(port, () => console.log('Server listening on port', port));
