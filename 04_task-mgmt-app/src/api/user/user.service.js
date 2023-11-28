@@ -9,7 +9,7 @@ const getAll = async () => {
 };
 
 const get = async (id) => {
-    await User.findOne({ _id: id });
+    return await User.findOne({ _id: id });
 };
 
 const update = async (id, user) => {

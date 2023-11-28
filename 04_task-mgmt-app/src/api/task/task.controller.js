@@ -20,7 +20,7 @@ const getAllHandler = async (_req, res) => {
 
 const getHandler = async (req, res) => {
     try {
-        const result = taskService.get(req.params.id);
+        const result = await taskService.get(req.params.id);
         res.status(200).send(result);
     } catch (e) {
         res.status(400).send(e);
