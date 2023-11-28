@@ -64,6 +64,22 @@ app.patch('/users/:id', async (req, res) => {
     }
 });
 
+app.delete('/users/:id', async (req, res) => {
+    const _id = req.params.id;
+
+    try {
+        const userDeleted = await User.findByIdAndDelete({ _id });
+
+        if (!userDeleted) {
+            return res.send({ error: 'User does not exist!' });
+        }
+
+        res.status(200).send({ message: 'User deleted!' });
+    } catch (e) {
+        res.status(500).send(e);
+    }
+});
+
 app.post('/tasks', async (req, res) => {
     const task = new Task(req.body);
     try {
@@ -101,16 +117,32 @@ app.patch('/tasks/:id', async (req, res) => {
     if (!isValidOperation) {
         return res.send({ error: 'Invalid updates!' });
     }
-
+    
     const _id = req.params.id;
     const updatedFields = req.body;
-
+    
     try {
         const updatedTask = await Task.findByIdAndUpdate({ _id }, { ...updatedFields }, { new: true, runValidators: true });
         if (!updatedTask) {
             return res.status(404).send();
         }
         res.status(200).send(updatedTask);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+});
+
+app.delete('/tasks/:id', async (req, res) => {
+    const _id = req.params.id;
+
+    try {
+        const taskDeleted = await Task.findByIdAndDelete({ _id });
+
+        if (!taskDeleted) {
+            return res.send({ error: 'Task does not exist!' });
+        }
+
+        res.status(200).send({ message: 'Task deleted!' });
     } catch (e) {
         res.status(500).send(e);
     }
