@@ -8,8 +8,8 @@ const getAll = async () => {
     return await Task.find({});
 };
 
-const get = async (_id) => {
-    await Task.findOne({ _id: _id });
+const get = async (id) => {
+    await Task.findOne({ _id: id });
 };
 
 const update = async (id, task) => {
@@ -23,7 +23,7 @@ const update = async (id, task) => {
 
     const updatedTask = await Task.findByIdAndUpdate({ _id: id }, { ...task }, { new: true, runValidators: true });
     if (!updatedTask) {
-        return null;
+        return { error: 'Task does not exist!' };
     }
     return updatedTask;
 };

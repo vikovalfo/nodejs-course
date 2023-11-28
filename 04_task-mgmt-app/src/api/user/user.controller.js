@@ -1,11 +1,9 @@
-const User = require('./user.model');
+const userService = require('./user.service');
 
 const createHandler = async (req, res) => {
-    const user = new User(req.body);
-
     try {
-        const savedUser = await user.save();
-        res.status(201).send(savedUser);
+        const result = await userService.create(req.body);
+        res.status(201).send(result);
     } catch (e) {
         res.status(400).send(e);
     }
@@ -13,58 +11,35 @@ const createHandler = async (req, res) => {
 
 const getAllHandler = async (_req, res) => {
     try {
-        const usersFound = await User.find({});
-        res.status(200).send(usersFound);
+        const result = await userService.getAll();
+        res.status(200).send(result);
     } catch (e) {
         res.status(400).send(e);
     }
 };
 
 const getHandler = async (req, res) => {
-    const _id = req.params.id;
-
     try {
-        const userFound = await User.findOne({ _id });
-        res.status(200).send(userFound);
+        const result = await userService.get(req.params.id);
+        res.status(200).send(result);
     } catch (e) {
         res.status(400).send(e);
     }
 };
 
 const updateHandler = async (req, res) => {
-    const updates = Object.keys(req.body);
-    const allowedUpdates = ['name', 'email', 'password', 'age'];
-    const isValidOperation = updates.every(update => allowedUpdates.includes(update));
-
-    if (!isValidOperation) {
-        return res.status(400).send({ error: 'Invalid updates!' });
-    }
-
-    const _id = req.params.id;
-    const updatedFields = req.body;
-
     try {
-        const updatedUser = await User.findByIdAndUpdate({ _id }, { ...updatedFields }, { new: true, runValidators: true });
-        if (!updatedUser) {
-            return res.status(404).send();
-        }
-        res.status(200).send(updatedUser);
+        const result = await userService.update(req.params.id, req.body);
+        res.status(200).send(result);
     } catch (e) {
         res.status(500).send(e);
     }
 };
 
 const deleteHandler = async (req, res) => {
-    const _id = req.params.id;
-
     try {
-        const userDeleted = await User.findByIdAndDelete({ _id });
-
-        if (!userDeleted) {
-            return res.send({ error: 'User does not exist!' });
-        }
-
-        res.status(200).send({ message: 'User deleted!' });
+        const result = await userService.remove(req.params.id)
+        res.status(200).send(result);
     } catch (e) {
         res.status(500).send(e);
     }
