@@ -46,6 +46,23 @@ app.post('/tasks', (req, res) => {
     });
 });
 
+app.get('/tasks/all', (_req, res) => {
+    Task.find({}).then((tasks) => {
+        res.status(200).send(tasks);
+    }).catch((e) => {
+        res.status(400).send(e);
+    });
+});
+
+app.get('/tasks/:id', (req, res) => {
+    const _id = req.params.id;
+    Task.findOne({ _id }).then((user) => {
+        res.status(200).send(user);
+    }).catch((e) => {
+        res.status(400).send(e);
+    });
+});
+
 app.use(morgan('common'));
 
 app.listen(port, () => console.log('Server listening on port', port));
