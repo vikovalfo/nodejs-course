@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const connectionURL = require('../config/connection');
+const connectionURL = require('../../config/connection');
 
 mongoose.connect(connectionURL)
     .then(() => console.log("Database connected!"))

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const connectionURL = require('../config/connection');
+const connectionURL = require('../../config/connection');
 
 mongoose.connect(connectionURL);
 
