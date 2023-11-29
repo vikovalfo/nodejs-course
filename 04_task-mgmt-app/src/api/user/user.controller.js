@@ -45,10 +45,20 @@ const deleteHandler = async (req, res) => {
     }
 };
 
+const authHandler = async (req, res) => {
+    try {
+        const result = await userService.auth(req.body);
+        res.status(200).send(result)
+    } catch (e) {
+        res.status(401).send(e);
+    }
+}
+
 module.exports = {
     createHandler,
     getAllHandler,
     getHandler,
     updateHandler,
-    deleteHandler
+    deleteHandler,
+    authHandler
 };

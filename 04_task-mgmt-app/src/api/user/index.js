@@ -9,5 +9,6 @@ router.get('/all', userController.getAllHandler);
 router.get('/:id', userController.getHandler);
 router.patch('/:id', userController.updateHandler);
 router.delete('/:id', userController.deleteHandler);
+router.post('/login',userController.authHandler);
 
 module.exports = router;

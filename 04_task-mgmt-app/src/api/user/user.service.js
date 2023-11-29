@@ -21,12 +21,15 @@ const update = async (id, user) => {
         return { error: 'Invalid updates!' };
     }
 
-    const updatedUser = await User.findByIdAndUpdate({ _id: id }, { ...user }, { new: true, runValidators: true });
-    if (!updatedUser) {
+    const userFound = await User.findById({ _id: id });
+    updates.forEach(update => userFound[update] = user[update]);
+    const userUpdated = await userFound.save();
+
+    if (!userUpdated) {
         return { error: 'User does not exist!' };
     }
 
-    return updatedUser;
+    return userUpdated;
 };
 
 const remove = async (id) => {
@@ -40,10 +43,15 @@ const remove = async (id) => {
 
 };
 
+const auth = async ({ email, password }) => {
+    return await User.findByCredentials(email, password);
+};
+
 module.exports = {
     create,
     getAll,
     get,
     update,
-    remove
+    remove,
+    auth
 }
