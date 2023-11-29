@@ -1,7 +1,9 @@
 const User = require('./user.model');
 
 const create = async (user) => {
-    return new User(user).save();
+    const userCreated = await User(user).save();
+    const token = await userCreated.generateAuthToken();
+    return { userCreated, token };
 };
 
 const getAll = async () => {
@@ -44,7 +46,9 @@ const remove = async (id) => {
 };
 
 const auth = async ({ email, password }) => {
-    return await User.findByCredentials(email, password);
+    const user = await User.findByCredentials(email, password);
+    const token = await user.generateAuthToken();
+    return { user, token };
 };
 
 module.exports = {
