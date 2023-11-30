@@ -47,10 +47,20 @@ const auth = async ({ email, password }) => {
     return { user, token };
 };
 
+const logout = async (user, currentToken) => {
+    user.tokens = user.tokens.filter(token => token.token !== currentToken);
+    if (!user.tokens) {
+        throw new Error();
+    }
+    await user.save();
+    return {message : 'Logout suceeded!'};
+}
+
 module.exports = {
     create,
     get,
     update,
     remove,
-    auth
+    auth,
+    logout
 }

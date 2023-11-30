@@ -53,11 +53,21 @@ const authHandler = async (req, res) => {
     }
 }
 
+const logoutHandler = async (req, res) => {
+    try {
+        const result = await userService.logout(req.user, req.token);
+        res.status(200).send(result);
+    } catch (e) {
+        res.status(401).send(e);
+    }
+}
+
 module.exports = {
     createHandler,
     getMeHandler,
     getHandler,
     updateHandler,
     deleteHandler,
-    authHandler
+    authHandler,
+    logoutHandler
 };

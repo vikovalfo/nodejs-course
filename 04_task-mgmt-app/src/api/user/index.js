@@ -11,5 +11,6 @@ router.get('/:id', userController.getHandler);
 router.patch('/:id', userController.updateHandler);
 router.delete('/:id', userController.deleteHandler);
 router.post('/login', userController.authHandler);
+router.post('/logout', authMiddleware, userController.logoutHandler);
 
 module.exports = router;
