@@ -9,10 +9,9 @@ const createHandler = async (req, res) => {
     }
 };
 
-const getAllHandler = async (_req, res) => {
+const getMeHandler = async (req, res) => {
     try {
-        const result = await userService.getAll();
-        res.status(200).send(result);
+        res.status(200).send(req.user);
     } catch (e) {
         res.status(400).send(e);
     }
@@ -56,7 +55,7 @@ const authHandler = async (req, res) => {
 
 module.exports = {
     createHandler,
-    getAllHandler,
+    getMeHandler,
     getHandler,
     updateHandler,
     deleteHandler,

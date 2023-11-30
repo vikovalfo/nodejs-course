@@ -6,10 +6,6 @@ const create = async (user) => {
     return { userCreated, token };
 };
 
-const getAll = async () => {
-    return await User.find({});
-};
-
 const get = async (id) => {
     return await User.findOne({ _id: id });
 };
@@ -53,7 +49,6 @@ const auth = async ({ email, password }) => {
 
 module.exports = {
     create,
-    getAll,
     get,
     update,
     remove,
