@@ -53,8 +53,14 @@ const logout = async (user, currentToken) => {
         throw new Error();
     }
     await user.save();
-    return {message : 'Logout suceeded!'};
-}
+    return { message: 'Logout suceeded!' };
+};
+
+const logoutAll = async (user) => {
+    user.tokens = [];
+    await user.save();
+    return { message: 'Logged out from everywhere' };
+};
 
 module.exports = {
     create,
@@ -62,5 +68,6 @@ module.exports = {
     update,
     remove,
     auth,
-    logout
+    logout,
+    logoutAll
 }

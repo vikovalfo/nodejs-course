@@ -51,7 +51,7 @@ const authHandler = async (req, res) => {
     } catch (e) {
         res.status(401).send(e);
     }
-}
+};
 
 const logoutHandler = async (req, res) => {
     try {
@@ -60,7 +60,16 @@ const logoutHandler = async (req, res) => {
     } catch (e) {
         res.status(401).send(e);
     }
-}
+};
+
+const logoutAllHandler = async (req, res) => {
+    try {
+        const result = await userService.logoutAll(req.user);
+        res.status(200).send(result);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+};
 
 module.exports = {
     createHandler,
@@ -69,5 +78,6 @@ module.exports = {
     updateHandler,
     deleteHandler,
     authHandler,
-    logoutHandler
+    logoutHandler,
+    logoutAllHandler
 };
